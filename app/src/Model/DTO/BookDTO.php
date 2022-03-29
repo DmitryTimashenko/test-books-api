@@ -2,6 +2,7 @@
 
 namespace App\Model\DTO;
 
+use App\Validator as AcmeAssert;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -9,12 +10,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 class BookDTO
 {
     #[Serializer\Expose()]
-    #[Serializer\Type("array<AuthorTranslateDTO>")]
+    #[Serializer\Type("array<".BookTranslateDTO::class .">")]
     #[Assert\NotBlank]
     private $translations;
 
     #[Serializer\Expose()]
-    #[Serializer\Type("array<Integer>")]
+    #[Serializer\Type("array<integer>")]
+    #[AcmeAssert\ContainsAuthorIds]
     private $authors;
 
     public function getTranslations()

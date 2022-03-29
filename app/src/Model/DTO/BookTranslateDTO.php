@@ -18,21 +18,13 @@ class BookTranslateDTO
     #[Assert\NotBlank]
     private string $title;
 
-    /**
-     * @return string
-     */
     public function getLanguage(): string
     {
         return $this->language;
     }
 
-    /**
-     * @return string
-     */
     public function getTitle(): string
     {
         return $this->title;
     }
-
-
 }

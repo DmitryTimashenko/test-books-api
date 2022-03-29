@@ -21,12 +21,7 @@ class AuthorRepository extends ServiceEntityRepository
          $this->_em->flush();
     }
 
-    public function findById(int $id)
-    {
-        return $this->find($id);
-    }
-
-    public function findOneByName(string $name)
+    public function findOneByName(string $name): ?Author
     {
         $qb = $this->createQueryBuilder('a')
             ->select('a')
