@@ -28,12 +28,12 @@ class Book implements TranslatableInterface
         $this->authors = new ArrayCollection();
     }
 
-    public function addAuthor(Author $author)
+    public function addAuthor(Author $author): void
     {
         $this->authors->add($author);
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }

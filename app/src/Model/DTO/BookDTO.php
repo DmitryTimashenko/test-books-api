@@ -2,6 +2,7 @@
 
 namespace App\Model\DTO;
 
+use App\Entity\BookTranslation;
 use App\Validator as AcmeAssert;
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,11 +20,12 @@ class BookDTO implements TranslatableDto
     #[AcmeAssert\ContainsAuthorIds]
     private $authors;
 
-    public function getTranslations()
+    public function getTranslations(): array
     {
         return $this->translations;
     }
-    public function getAuthors()
+
+    public function getAuthors(): array
     {
         return $this->authors;
     }

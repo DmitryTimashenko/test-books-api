@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Model\DTO\BookDTO;
 use App\Service\AuthorService;
+use App\Service\BookService;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,12 +16,15 @@ class BookController extends AbstractController
 {
     private SerializerInterface $serializer;
     private ValidatorInterface $validator;
+    private BookService $bookService;
 
-    public function __construct(SerializerInterface $serializer, ValidatorInterface $validator, AuthorService $authorService)
+    public function __construct(SerializerInterface $serializer, ValidatorInterface $validator, BookService $bookService)
     {
         $this->serializer = $serializer;
         $this->validator = $validator;
+        $this->bookService = $bookService;
     }
+
     #[Route('/book/create', methods: ['POST'])]
     public function create(Request $request): Response
     {
@@ -30,6 +34,8 @@ class BookController extends AbstractController
             $errorsString = (string) $errors;
             return $this->json(["message" => $errorsString], 400);
         }
+
+        $this->bookService->create($input);
 
         return $this->json(["message" => []], 200);
     }
