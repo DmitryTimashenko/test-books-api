@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\BookRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\PersistentCollection;
 use Knp\DoctrineBehaviors\Contract\Entity\TranslatableInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslatableTrait;
 
@@ -28,17 +29,17 @@ class Book implements TranslatableInterface
         $this->authors = new ArrayCollection();
     }
 
-    public function addAuthor(Author $author)
+    public function addAuthor(Author $author): void
     {
         $this->authors->add($author);
     }
 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    public function getAuthors(): ArrayCollection
+    public function getAuthors()
     {
         return $this->authors;
     }
