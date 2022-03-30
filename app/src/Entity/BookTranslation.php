@@ -7,6 +7,7 @@ use Knp\DoctrineBehaviors\Contract\Entity\TranslationInterface;
 use Knp\DoctrineBehaviors\Model\Translatable\TranslationTrait;
 
 #[ORM\Entity]
+#[ORM\Index(name: "search_idx", columns: ["title"])]
 class BookTranslation implements TranslationInterface
 {
     use TranslationTrait;
