@@ -3,8 +3,11 @@
 namespace App\Service;
 
 use App\Entity\Book;
-use App\Model\DTO\BookDTO;
-use App\Model\DTO\BookTranslateDTO;
+use App\Model\AuthorListItem;
+use App\Model\BookDTO;
+use App\Model\BookListItem;
+use App\Model\BookListResponse;
+use App\Model\BookTranslateDTO;
 use App\Repository\AuthorRepository;
 use App\Repository\BookRepository;
 
@@ -35,5 +38,29 @@ class BookService
         }
 
         $this->bookRepository->add($book);
+    }
+
+    public function searchByTitle(string $title): BookListResponse
+    {
+        $books = $this->bookRepository->searchOneByTitle($title);
+        return $this->mapBooksToBookListResponse($books);
+    }
+
+    /**
+     * @param Book[] $books
+     * @return BookListResponse
+     */
+    private function mapBooksToBookListResponse(array $books): BookListResponse
+    {
+        $items = [];
+        foreach ($books as $book) {
+            $item = new BookListItem($book->getId(), $book->translate('ru')->getTitle());
+            foreach ($book->getAuthors() as $author) {
+                $authorItem = new AuthorListItem($author->getId(), $author->translate('ru')->getName());
+                $item->addAuthor($authorItem);
+            }
+            $items[] = $item;
+        }
+        return new BookListResponse($items);
     }
 }

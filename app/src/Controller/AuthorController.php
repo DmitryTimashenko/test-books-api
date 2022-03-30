@@ -3,7 +3,7 @@
 namespace App\Controller;
 
 use App\Helpers\TranslatableDtoValidator;
-use App\Model\DTO\AuthorDTO;
+use App\Model\AuthorDTO;
 use App\Service\AuthorService;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;

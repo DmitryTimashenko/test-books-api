@@ -2,7 +2,7 @@
 
 namespace App\Helpers;
 
-use App\Model\DTO\TranslatableDto;
+use App\Model\TranslatableDto;
 use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 

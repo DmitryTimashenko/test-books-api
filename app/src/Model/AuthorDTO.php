@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Model\DTO;
+namespace App\Model;
 
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;

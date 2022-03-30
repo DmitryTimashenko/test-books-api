@@ -3,7 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Author;
-use App\Model\DTO\AuthorDTO;
+use App\Model\AuthorDTO;
 use App\Repository\AuthorRepository;
 
 class AuthorService

@@ -2,8 +2,7 @@
 
 namespace App\Controller;
 
-use App\Model\DTO\BookDTO;
-use App\Service\AuthorService;
+use App\Model\BookDTO;
 use App\Service\BookService;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -38,5 +37,13 @@ class BookController extends AbstractController
         $this->bookService->create($input);
 
         return $this->json(["message" => []], 200);
+    }
+
+    #[Route('/book/search', methods: ['GET'])]
+    public function searchBook(Request $request): Response
+    {
+        $tile = $request->get('title');
+        $bookList = $this->bookService->searchByTitle($tile);
+        return new Response($this->serializer->serialize($bookList,'json'), 200);
     }
 }

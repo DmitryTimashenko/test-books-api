@@ -1,12 +1,12 @@
 <?php
 
-namespace App\Model\DTO;
+namespace App\Model;
 
 use JMS\Serializer\Annotation as Serializer;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[Serializer\ExclusionPolicy('all')]
-class AuthorTranslateDTO
+class BookTranslateDTO
 {
     #[Serializer\Expose()]
     #[Serializer\Type('string')]
@@ -16,15 +16,15 @@ class AuthorTranslateDTO
     #[Serializer\Expose()]
     #[Serializer\Type('string')]
     #[Assert\NotBlank]
-    private string $name;
+    private string $title;
 
     public function getLanguage(): string
     {
         return $this->language;
     }
 
-    public function getName(): string
+    public function getTitle(): string
     {
-        return $this->name;
+        return $this->title;
     }
 }
