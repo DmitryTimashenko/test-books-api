@@ -18,7 +18,10 @@ class AuthorController extends AbstractController
     private TranslatableDtoValidator $validator;
     private AuthorService $authorService;
 
-    public function __construct(SerializerInterface $serializer, TranslatableDtoValidator $validator, AuthorService $authorService)
+    public function __construct(
+        SerializerInterface $serializer,
+        TranslatableDtoValidator $validator,
+        AuthorService $authorService)
     {
         $this->serializer = $serializer;
         $this->validator = $validator;
@@ -32,10 +35,10 @@ class AuthorController extends AbstractController
         $errors = $this->validator->validate($input);
         if ($errors->count() > 0) {
             $errorsString = (string) $errors;
-            return $this->json(["message" => $errorsString], 400);
+            return $this->json(["message" => $errorsString], Response::HTTP_BAD_REQUEST);
         }
 
         $this->authorService->create($input);
-        return $this->json(["message" => []], 200);
+        return $this->json(["message" => []], Response::HTTP_CREATED);
     }
 }

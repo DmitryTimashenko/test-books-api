@@ -22,7 +22,7 @@ class BookService
         $this->authorRepository = $authorRepository;
     }
 
-    public function create(BookDTO $data)
+    public function create(BookDTO $data): Book
     {
         $book = new Book();
 
@@ -38,6 +38,8 @@ class BookService
         }
 
         $this->bookRepository->add($book);
+
+        return $book;
     }
 
     public function searchByTitle(string $title): BookListResponse

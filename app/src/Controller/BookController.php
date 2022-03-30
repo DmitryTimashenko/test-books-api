@@ -17,7 +17,11 @@ class BookController extends AbstractController
     private ValidatorInterface $validator;
     private BookService $bookService;
 
-    public function __construct(SerializerInterface $serializer, ValidatorInterface $validator, BookService $bookService)
+    public function __construct(
+        SerializerInterface $serializer,
+        ValidatorInterface $validator,
+        BookService $bookService
+    )
     {
         $this->serializer = $serializer;
         $this->validator = $validator;
@@ -31,12 +35,12 @@ class BookController extends AbstractController
         $errors = $this->validator->validate($input);
         if ($errors->count() > 0) {
             $errorsString = (string) $errors;
-            return $this->json(["message" => $errorsString], 400);
+            return $this->json(["message" => $errorsString], Response::HTTP_BAD_REQUEST);
         }
 
         $this->bookService->create($input);
 
-        return $this->json(["message" => []], 200);
+        return $this->json(["message" => []], Response::HTTP_CREATED);
     }
 
     #[Route('/book/search', methods: ['GET'])]
@@ -44,6 +48,6 @@ class BookController extends AbstractController
     {
         $tile = $request->get('title');
         $bookList = $this->bookService->searchByTitle($tile);
-        return new Response($this->serializer->serialize($bookList,'json'), 200);
+        return new Response($this->serializer->serialize($bookList,'json'), Response::HTTP_OK);
     }
 }
