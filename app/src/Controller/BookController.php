@@ -37,4 +37,13 @@ class BookController extends AbstractController
         $bookList = $this->bookService->searchByTitle($tile);
         return new Response($this->serializer->serialize($bookList,'json'), Response::HTTP_OK);
     }
+
+    #[Route('/{_locale}/book/{id}', methods: ['GET'], requirements: ['_locale' => 'en|ru'])]
+    public function getBook(Request $request, int $id): Response
+    {
+        $book = $this->bookService->getBook($id);
+        return new Response(
+            $this->serializer->serialize($book,'json'),
+            Response::HTTP_OK, ['Content-Type' => 'application/json']);
+    }
 }

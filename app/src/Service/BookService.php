@@ -3,6 +3,8 @@
 namespace App\Service;
 
 use App\Entity\Book;
+use App\Exception\BookNotFoundException;
+use App\Exception\BookNotTranslateException;
 use App\Model\AuthorListItem;
 use App\Model\BookDTO;
 use App\Model\BookListItem;
@@ -56,13 +58,31 @@ class BookService
     {
         $items = [];
         foreach ($books as $book) {
-            $item = new BookListItem($book->getId(), $book->translate('ru')->getTitle());
-            foreach ($book->getAuthors() as $author) {
-                $authorItem = new AuthorListItem($author->getId(), $author->translate('ru')->getName());
-                $item->addAuthor($authorItem);
-            }
-            $items[] = $item;
+            $items[] = $this->mapBookEntityToItem($book);
         }
         return new BookListResponse($items);
+    }
+
+    private function mapBookEntityToItem(Book $book): BookListItem
+    {
+        $item = new BookListItem($book->getId(), $book->translate($book->getCurrentLocale())->getTitle());
+        foreach ($book->getAuthors() as $author) {
+            $authorItem = new AuthorListItem($author->getId(), $author->translate($author->getCurrentLocale())->getName());
+            $item->addAuthor($authorItem);
+        }
+
+        return $item;
+    }
+
+    public function getBook(int $id): ?BookListItem
+    {
+        /** @var Book $book */
+        $book = $this->bookRepository->find($id);
+
+        if (empty($book)) {
+            throw new BookNotFoundException();
+        }
+        
+        return $this->mapBookEntityToItem($book);
     }
 }
