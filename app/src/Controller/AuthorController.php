@@ -14,31 +14,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class AuthorController extends AbstractController
 {
 
-    private SerializerInterface $serializer;
-    private TranslatableDtoValidator $validator;
-    private AuthorService $authorService;
-
     public function __construct(
-        SerializerInterface $serializer,
-        TranslatableDtoValidator $validator,
-        AuthorService $authorService)
+        private SerializerInterface $serializer,
+        private TranslatableDtoValidator $validator,
+        private AuthorService $authorService)
     {
-        $this->serializer = $serializer;
-        $this->validator = $validator;
-        $this->authorService = $authorService;
     }
 
     #[Route('/author/create', methods: ['POST'])]
     public function create(Request $request): Response
     {
         $input = $this->serializer->deserialize($request->getContent(), AuthorDTO::class, 'json');
-        $errors = $this->validator->validate($input);
-        if ($errors->count() > 0) {
-            $errorsString = (string) $errors;
-            return $this->json(["message" => $errorsString], Response::HTTP_BAD_REQUEST);
-        }
-
+        $this->validator->validate($input);
         $this->authorService->create($input);
-        return $this->json(["message" => []], Response::HTTP_CREATED);
+        return $this->json(["message" => "Author was created"], Response::HTTP_CREATED);
     }
 }

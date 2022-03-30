@@ -2,8 +2,8 @@
 
 namespace App\Helpers;
 
+use App\Exception\CreateBookInputIsNotValidException;
 use App\Model\TranslatableDto;
-use Symfony\Component\Validator\ConstraintViolationListInterface;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class TranslatableDtoValidator
@@ -15,14 +15,22 @@ class TranslatableDtoValidator
         $this->validator = $validator;
     }
 
-    public function validate(TranslatableDto $dto): ConstraintViolationListInterface
+    /**
+     * @param TranslatableDto $dto
+     * @return void
+     */
+    public function validate(TranslatableDto $dto)
     {
+        $errors = $this->validator->validate($dto);
+        if ($errors->count() > 0) {
+            throw new CreateBookInputIsNotValidException('Input json is not valid');
+        }
+
         foreach ($dto->getTranslations() as $translation) {
             $errors = $this->validator->validate($translation);
             if ($errors->count() > 0) {
-                return $errors;
+                throw new CreateBookInputIsNotValidException('Input json is not valid');
             }
         }
-        return $this->validator->validate($dto);
     }
 }
