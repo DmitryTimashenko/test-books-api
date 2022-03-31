@@ -17,7 +17,7 @@ class BookDTO implements TranslatableDto
     #[Serializer\Expose()]
     #[Serializer\Type("array<integer>")]
     #[AcmeAssert\ContainsAuthorIds]
-    private $authors;
+    private $authors = [];
 
     public function getTranslations(): array
     {
@@ -27,5 +27,15 @@ class BookDTO implements TranslatableDto
     public function getAuthors(): array
     {
         return $this->authors;
+    }
+
+    public function setTranslations($translations): void
+    {
+        $this->translations = $translations;
+    }
+
+    public function setAuthors(array $authors): void
+    {
+        $this->authors = $authors;
     }
 }

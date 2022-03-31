@@ -18,6 +18,17 @@ class BookTranslateDTO
     #[Assert\NotBlank]
     private string $title;
 
+    /**
+     * @param string $language
+     * @param string $title
+     */
+    public function __construct(string $language, string $title)
+    {
+        $this->language = $language;
+        $this->title = $title;
+    }
+
+
     public function getLanguage(): string
     {
         return $this->language;

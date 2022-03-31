@@ -8,14 +8,9 @@ use App\Repository\AuthorRepository;
 
 class AuthorService
 {
-    private AuthorRepository $repository;
-
-    /**
-     * @param AuthorRepository $repository
-     */
-    public function __construct(AuthorRepository $repository)
+    public function __construct(
+        private AuthorRepository $repository)
     {
-        $this->repository = $repository;
     }
 
     public function create(AuthorDTO $data): Author

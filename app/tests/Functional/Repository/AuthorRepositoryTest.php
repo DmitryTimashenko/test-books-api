@@ -27,7 +27,7 @@ class AuthorRepositoryTest extends WebTestCase
         $author->translate('ru')->setName($russianName);
         $this->repository->add($author);
 
-        $expectedAuthor = $this->repository->findById($author->getId());
+        $expectedAuthor = $this->repository->find($author->getId());
 
         $this->assertEquals($russianName, $expectedAuthor->translate('ru')->getName());
     }

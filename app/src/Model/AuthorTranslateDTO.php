@@ -18,6 +18,16 @@ class AuthorTranslateDTO
     #[Assert\NotBlank]
     private string $name;
 
+    /**
+     * @param string $language
+     * @param string $name
+     */
+    public function __construct(string $language, string $name)
+    {
+        $this->language = $language;
+        $this->name = $name;
+    }
+
     public function getLanguage(): string
     {
         return $this->language;

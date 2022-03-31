@@ -4,7 +4,6 @@ namespace App\Service;
 
 use App\Entity\Book;
 use App\Exception\BookNotFoundException;
-use App\Exception\BookNotTranslateException;
 use App\Model\AuthorListItem;
 use App\Model\BookDTO;
 use App\Model\BookListItem;
@@ -15,13 +14,10 @@ use App\Repository\BookRepository;
 
 class BookService
 {
-    private BookRepository $bookRepository;
-    private AuthorRepository $authorRepository;
-
-    public function __construct(BookRepository $bookRepository, AuthorRepository $authorRepository)
+    public function __construct(
+        private BookRepository $bookRepository,
+        private AuthorRepository $authorRepository)
     {
-        $this->bookRepository = $bookRepository;
-        $this->authorRepository = $authorRepository;
     }
 
     public function create(BookDTO $data): Book

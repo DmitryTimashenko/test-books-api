@@ -14,6 +14,14 @@ class AuthorDTO implements TranslatableDto
     private $translations;
 
     /**
+     * @param AuthorTranslateDTO[] $translations
+     */
+    public function __construct($translations)
+    {
+        $this->translations = $translations;
+    }
+
+    /**
      * @return AuthorTranslateDTO[]
      */
     public function getTranslations(): array
