@@ -18,3 +18,6 @@ bash:
 
 test:
 	docker-compose -f ./docker/docker-compose.yml exec -u www-data php-fpm bin/phpunit
+
+migrate:
+	docker-compose -f ./docker/docker-compose.yml exec -u www-data php-fpm bin/console doctrine:migrations:migrate
